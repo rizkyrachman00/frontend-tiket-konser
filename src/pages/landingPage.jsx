@@ -5,6 +5,7 @@ import CarouHeader from "../components/carouHeader";
 import CarouConcert from "../components/carouConcert";
 import CarouTrending from "../components/carouTrending";
 import Article from "../components/article";
+import AfterConcert from "../components/afterConcert";
 
 const landingPage = () => {
   return (
@@ -20,6 +21,7 @@ const landingPage = () => {
         <CarouConcert />
         <CarouTrending />
         <Article />
+        <AfterConcert />
         <br />
         <br />
       </Container>

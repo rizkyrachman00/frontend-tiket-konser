@@ -7,7 +7,7 @@ import Logo3 from "../assets/f-uphonia.jpeg";
 const carousel = () => {
   return (
     <Container className="d-flex justify-content-center">
-      <Row className="mt-2">
+      <Row style={{ marginTop: "7rem" }}>
         <style>
           {`
           .carousel-control-prev-icon,

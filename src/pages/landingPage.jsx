@@ -4,6 +4,7 @@ import { Container } from "react-bootstrap";
 import CarouHeader from "../components/carouHeader";
 import CarouConcert from "../components/carouConcert";
 import CarouTrending from "../components/carouTrending";
+import Article from "../components/article";
 
 const landingPage = () => {
   return (
@@ -18,6 +19,7 @@ const landingPage = () => {
         <CarouHeader />
         <CarouConcert />
         <CarouTrending />
+        <Article />
         <br />
         <br />
       </Container>

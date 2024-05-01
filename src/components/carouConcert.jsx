@@ -8,18 +8,18 @@ const carouConcert = () => {
   const responsive = {
     desktop: {
       // the naming can be any, depends on you.
-      breakpoint: { max: 3000, min: 1024 },
+      breakpoint: { max: 3000, min: 1400 },
       items: 4,
       slidesToSlide: 2,
     },
     laptop: {
-      breakpoint: { max: 1024, min: 800 },
+      breakpoint: { max: 1400, min: 992 },
       items: 3,
       slidesToSlide: 2,
     },
     tablet: {
-      breakpoint: { max: 800, min: 464 },
-      items: 2,
+      breakpoint: { max: 766, min: 464 },
+      items: 1,
       slidesToSlide: 2,
     },
     mobile: {

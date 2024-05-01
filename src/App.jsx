@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LoginForm from "./pages/loginForm";
+import LoginForm from "./pages/loginForm"; 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandingPage from "./pages/landingPage";
 import NotFound from "./pages/notFound";

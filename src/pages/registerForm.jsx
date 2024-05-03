@@ -42,8 +42,8 @@ const LastShape = styled(Shape)`
 `;
 
 const Form = styled.form`
-  height: 540px;
-  width: 400px;
+  height: 550px;
+  width: 600px;
   background-color: rgba(255, 255, 255, 0.13);
   position: absolute;
   transform: translate(-50%, -50%);
@@ -53,7 +53,7 @@ const Form = styled.form`
   backdrop-filter: blur(10px);
   border: 2px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
-  padding: 50px 35px;
+  padding: 50px 35px 0;
 `;
 
 const Title = styled.h3`
@@ -129,50 +129,42 @@ const BtnContainer = styled.div`
   width: "100%";
 `;
 
-const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
+const TwoColumnContainer = styled.div`
+  display: flex; /* Gunakan flexbox untuk tata letak dua kolom */
+  gap: 20px; /* Jarak antara dua kolom */
+  justify-content: center;
+`;
 
-  const navigate = useNavigate();
+const registerForm = () => {
+  const [name, setName] = useState(""); // Untuk menyimpan nama
+  const [email, setEmail] = useState(""); // Untuk menyimpan email
+  const [password, setPassword] = useState(""); // Untuk menyimpan kata sandi
+  const [phoneNumber, setPhoneNumber] = useState(""); // Untuk nomor telepon
+  const [error, setError] = useState(null); // Untuk pesan kesalahan
+  const navigate = useNavigate(); // Untuk navigasi setelah registrasi
 
-  // Kode dalam fungsi event handler
   const handleSubmit = (e) => {
     e.preventDefault(); // Mencegah reload form
     setError(null); // Reset error setiap kali submit
 
-    // Permintaan POST ke endpoint login API
+    // Permintaan POST ke endpoint registrasi API
     axios
-      .post("http://127.0.0.1:8000/api/auth/login", {
+      .post("http://127.0.0.1:8000/api/auth/register", {
+        name,
         email,
         password,
+        phone_number: phoneNumber, // Pastikan menggunakan key yang benar
       })
       .then((response) => {
-        // Ambil token dan nama dari respons API
-        const token = response.data.data?.token;
-        const name = response.data.data?.name;
+        console.log("API Response:", response.data); // Tambahkan log untuk melihat respons
 
-        if (token && name) {
-          // Enkripsi token sebelum menyimpan ke local storage
-          const encryptedToken = CryptoJS.AES.encrypt(
-            token,
-            "secret-key"
-          ).toString(); // Gunakan kunci rahasia untuk enkripsi
+        console.log("Registration successful");
 
-          // Simpan nama pengguna dan token terenkripsi di local storage
-          localStorage.setItem("token", encryptedToken);
-          localStorage.setItem("name", name);
-
-          console.log("Login successful");
-
-          navigate("/"); // Arahkan ke halaman beranda
-        } else {
-          setError("Login failed. Invalid response from server.");
-        }
+        navigate("/login"); // Pengalihan setelah berhasil
       })
       .catch((error) => {
-        setError("Login failed. Please check your credentials.");
-        console.error("Login error:", error);
+        setError("Registration failed. Please check your information.");
+        console.error("Registration error:", error);
       });
   };
 
@@ -183,23 +175,75 @@ const LoginForm = () => {
         <LastShape />
       </Background>
       <Form onSubmit={handleSubmit}>
-        <Title>Login Here</Title>
-        <Label htmlFor="email">Email</Label>
-        <Input
-          type="text"
-          placeholder="Email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <Label htmlFor="password">Password</Label>
-        <Input
-          type="password"
-          placeholder="Password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <Title>Register Here</Title>
+        <TwoColumnContainer>
+          {" "}
+          {/* Gunakan dua kolom */}
+          <div
+            style={{
+              width: "100%",
+            }}
+          >
+            {" "}
+            {/* Kolom pertama */}
+            <Label htmlFor="name">Name</Label>
+            <Input
+              type="text"
+              placeholder="Your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div
+            style={{
+              width: "100%",
+            }}
+          >
+            {" "}
+            {/* Kolom kedua */}
+            <Label htmlFor="phoneNumber">Phone Number</Label>
+            <Input
+              type="text"
+              placeholder="Phone Number"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+          </div>
+        </TwoColumnContainer>
+        <TwoColumnContainer>
+          {" "}
+          {/* Kolom kedua */}
+          <div
+            style={{
+              width: "100%",
+            }}
+          >
+            {" "}
+            {/* Kolom pertama */}
+            <Label htmlFor="email">Email</Label>
+            <Input
+              type="text"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div
+            style={{
+              width: "100%",
+            }}
+          >
+            {" "}
+            {/* Kolom kedua */}
+            <Label htmlFor="password">Password</Label>
+            <Input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+        </TwoColumnContainer>
         <p
           style={{
             color: "white",
@@ -207,16 +251,16 @@ const LoginForm = () => {
             marginTop: "9px",
           }}
         >
-          Belum punya akun ?{" "}
+          Sudah punya akun ?{" "}
           <a
             style={{
               color: "blue",
               cursor: "pointer",
               textDecoration: "underline",
             }}
-            onClick={() => navigate("/register")}
+            onClick={() => navigate("/login")}
           >
-            Register Here
+            Login
           </a>{" "}
         </p>
         {error && (
@@ -239,7 +283,7 @@ const LoginForm = () => {
             alignItems: "center",
           }}
         >
-          <Button type="submit">Log In</Button>
+          <Button type="submit">Register</Button>
         </BtnContainer>
         <SocialContainer>
           <SocialButton>
@@ -254,4 +298,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default registerForm;
